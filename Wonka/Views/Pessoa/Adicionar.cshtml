@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "Adicionar";
+}
+
+
+
+<title>@ViewBag.Title</title>
+
+<h1>Adicionar Pessoa</h1>
+
+<div id="adicionarPessoa">
+    <ul class="nav nav-tabs nav-pills bg-light  mt-4 mb-3">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#tabPessoa">Pessoa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tabDocumento">Documento</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tabEndereco">Endereço</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tabTelefone">Telefone</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane container active" id="tabPessoa">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="txtNome">Nome</label>
+                    <input type="text" id="txtNome" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="txtSobrenome">Sobrenome</label>
+                    <input type="text" id="txtSobrenome" class="form-control">
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="tab-pane container fade" id="tabTelefone">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="txtTipoTelefone">Tipo</label>
+                    <input type="text" id="txtTipoTelefone" class="form-control">
+                </div>
+                <div class="form-group col-md-1">
+                    <label for="txtDDD">DDD</label>
+                    <input type="text" id="txtDDD" class="form-control">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="txtNumeroTelefone">Número</label>
+                    <input type="text" id="txtNumeroTelefone" class="form-control">
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">DDD</th>
+                            <th scope="col">Número</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Residencial</th>
+                            <td>11</td>
+                            <td>965036088</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-pane container fade" id="tabDocumento">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="txtTipoDocumento">Tipo</label>
+                    <input type="text" id="txtTipoDocumento" class="form-control">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="txtNumeroDocumento">Número</label>
+                    <input type="text" id="txtNumeroDocumento" class="form-control">
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Número</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">RG</th>
+                            <td>577625202</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-pane container fade" id="tabEndereco">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="txtTipoEndereco">Tipo</label>
+                    <input type="text" id="txtTipoEndereco" class="form-control">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="txtLogradouro">Logradouro</label>
+                    <input type="text" id="txtLogradouro" class="form-control">
+                </div>
+                <div class="form-group col-md-1">
+                    <label for="txtNumeroEndereco">Número</label>
+                    <input type="text" id="txtNumeroEndereco" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="txtBairro">Bairro</label>
+                    <input type="text" id="txtBairro" class="form-control">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-1">
+                    <label for="txtCEP">CEP</label>
+                    <input type="text" id="txtCEP" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="txtCidade">Cidade</label>
+                    <input type="text" id="txtCidade" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="txtUF">UF</label>
+                    <input type="text" id="txtUF" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="btn-group mt-2">
+            <div>
+                <button class="btn btn-success mr-3 ">Salvar</button>
+            </div>
+
+            <div>
+                <a href="@Url.Action("Index","Pessoa")" class="btn btn-danger">Voltar</a>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+﻿<!doctype html>
+<html lang="pt-br">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/all.min.css" rel="stylesheet" />
+    <link href="~/Content/site.css" rel="stylesheet" />
+
+    
+
+    <title>Wonka | @ViewBag.Title</title>
+</head>
+<body>
+    @Html.Partial("_menu")
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

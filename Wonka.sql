@@ -1,0 +1,69 @@
+CREATE DATABASE Wonka;
+USE Wonka;
+
+CREATE TABLE Pessoa(
+	Id INT IDENTITY(1,1) NOT NULL, 
+	Nome VARCHAR(50) NOT NULL,
+	Sobrenome VARCHAR(100) NOT NULL,
+	CONSTRAINT PK_Pessoa PRIMARY KEY(Id)
+);
+
+CREATE TABLE Telefone(
+	Id INT IDENTITY(1,1) NOT NULL,
+	IdPessoa INT NOT NULL,
+	Tipo VARCHAR(50) NOT NULL,
+	DDD CHAR(2) NOT NULL,
+	Numero VARCHAR(20) NOT NULL, 
+	CONSTRAINT PK_Telefone PRIMARY KEY(Id),
+	CONSTRAINT FK_Telefone_IdPessoa FOREIGN KEY (IdPessoa) REFERENCES Pessoa (Id)
+);
+
+CREATE TABLE Documento(
+	Id INT IDENTITY(1,1) NOT NULL,
+	IdPessoa INT NOT NULL,
+	Tipo VARCHAR(50) NOT NULL, 
+	Numero VARCHAR(20) NOT NULL,
+	CONSTRAINT PK_Documento PRIMARY KEY(Id),
+	CONSTRAINT FK_Documento_IdPessoa FOREIGN KEY (IdPessoa) REFERENCES Pessoa(Id)
+);
+
+CREATE TABLE Endereco(
+	Id INT IDENTITY(1,1) NOT NULL,
+	IdPessoa INT NOT NULL,
+	Tipo VARCHAR(20) NOT NULL,
+	CEP CHAR(8) NOT NULL,
+	Logradouro VARCHAR(50) NOT NULL,
+	Numero CHAR(5) NOT NULL,
+	Bairro VARCHAR(40) NOT NULL,
+	Cidade VARCHAR(40) NOT NULL,
+	UF VARCHAR(20) NOT NULL,
+	CONSTRAINT PK_Endereco PRIMARY KEY(Id), 
+	CONSTRAINT FK_Endereco_IdPessoa FOREIGN KEY(IdPessoa) REFERENCES Pessoa(Id)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT * FROM pessoa;
+INSERT INTO Pessoa VALUES
+('Maria','de Souza'),
+('Pedro','Dias'),
+('Roger','Gomes')
+
+
+
+
+
+

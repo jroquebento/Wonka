@@ -9,13 +9,17 @@ namespace Wonka.Controllers
 {
     public class PessoaController : Controller
     {
-        public ViewResult Index() 
+        public ViewResult Index()
         {
             return View();
         }
-        public ViewResult Adicionar() 
+        public ViewResult Adicionar()
         {
             return View();
+        }
+        public JsonResult InserirJson(JsonResult json)
+        {
+            return Json( new JsonResult());
         }
     }
 }

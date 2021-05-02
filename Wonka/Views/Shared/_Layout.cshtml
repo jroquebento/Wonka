@@ -9,19 +9,16 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/all.min.css" rel="stylesheet" />
     <link href="~/Content/site.css" rel="stylesheet" />
-
-    
-
     <title>Wonka | @ViewBag.Title</title>
+    <script src="@Url.Content("~/Scripts/jquery-3.0.0.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    @RenderSection("Scripts", false)
 </head>
 <body>
     @Html.Partial("_menu")
 
     <div class="container">
         @RenderBody()
-    </div>
-
-    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    </div>    
 </body>
 </html>

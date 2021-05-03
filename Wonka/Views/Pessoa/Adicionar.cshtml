@@ -9,15 +9,51 @@
 
         //Criar função de adicionar documento
         function adicionarDocumento() {
-            var tipoDocumento = $('#txtTipoDocumento').val();
-            var numeroDocumento = $('#txtNumeroDocumento').val();
-            var idDocumento = "Documento" + contadorDocumento;
-
             if (validarDocumento()) {
-                $('#tabDocumento tbody').append('<tr id=' + idDocumento + '><td id=tipoDocumento>' + tipoDocumento + '</th><td id=numeroDocumento>' + numeroDocumento + '</td><td><a href=javascript:deletarLinha(' + idDocumento + ')><i class="fas fa-trash-alt"></i></a></td></tr>');
+                var tipo = $('#txtTipoDocumento').val();
+                var numero = $('#txtNumeroDocumento').val();
+
+                var linha = novaLinha("Documento", tipo, null, numero);
+                $('#tabDocumento tbody').append(linha);
+
                 contadorDocumento++;
                 limparDadosDocumento();
             }
+        }
+
+        function adicionarTelefone() {
+            var tipo = $('#txtTipoTelefone').val();
+            var ddd = $('#txtDDD').val();
+            var numero = $('#txtNumeroTelefone').val();
+
+
+            var linha = novaLinha("Telefone", tipo, ddd, numero);
+            $('#tabTelefone tbody').append(linha);
+
+            contadorTelefone++;
+            limparDadosTelefone();
+        }
+
+        function novaLinha(tr, tipo, ddd, numero) {
+            var id = tr + contadorDocumento;
+            var linha = $('<tr id=' + id + '>');
+            var colunaTipo = $('<td id=tipo' + tr + '>').text(tipo);
+            var colunaNumero = $('<td id=numero' + tr + '>').text(numero);
+            var colunaDDD = $('<td id=DDD' + tr + '>').text(ddd);
+            var colunaRemover = $("<td>");
+
+            var link = $("<a>").attr("href", "javascript:deletarLinha(" + id + ")");
+            var icone = $("<i>").addClass("fas fa-trash-alt");
+
+            link.append(icone);
+            colunaRemover.append(link);
+
+            linha.append(colunaTipo);
+            tr == "Telefone" ? linha.append(colunaDDD) : null;
+            linha.append(colunaNumero);
+            linha.append(colunaRemover);
+
+            return linha;
         }
 
         function deletarLinha(elemento) {
@@ -27,6 +63,12 @@
         function limparDadosDocumento() {
             $('#txtTipoDocumento').val('');
             $('#txtNumeroDocumento').val('');
+        }
+
+        function limparDadosTelefone() {
+            $('#txtTipoTelefone').val('');
+            $('#txtDDD').val('');
+            $('#txtNumeroTelefone').val('');
         }
 
         function validarDocumento() {
@@ -72,25 +114,26 @@
                     }
                     jsonObjeto.Documento.push(itemDocumento);
                 }
+            }
+
+            //Montar JSON Telefone
+            jsonObjeto.Telefone = [];
+            var qtdeElementos = document.getElementById("tabelaTelefone").rows.length;
+            if (qtdeElementos > 0) {
+                for (i = 0; i < qtdeElementos; i++) {
+
+                    var itemTelefone = {
+                        "Tipo": $('td[id="tipoTelefone"]')[i].innerText,
+                        "DDD": $('td[id="DDDTelefone"]')[i].innerText,
+                        "Numero": $('td[id="numeroTelefone"]')[i].innerText
+
+                    }
+                    jsonObjeto.Telefone.push(itemTelefone);
+                }
 
                 console.log(jsonObjeto);
             }
-
-            ////Montar JSON Telefone
-            //jsonObjeto.Telefone = [];
-            //var qtdeElementos = document.getElementById("tabelaTelefone").rows.length;
-            //if (qtdeElementos > 0) {
-            //    for (i = 0; i < qtdeElementos; i++) {
-
-            //        var itemDocumento = {
-            //            "Tipo": $('td[id="tipoDocumento"]')[i].innerText,
-            //            "Numero": $('td[id="numeroDocumento"]')[i].innerText
-            //        }
-            //        jsonObjeto.Documento.push(itemDocumento);
-            //    }
-
-            //    console.log(jsonObjeto);
-            }
+        }
 
     </script>
 </head>
@@ -147,7 +190,11 @@
                 </div>
                 <div class="col-md-5 ml">
                     <label for="#">&nbsp;</label>
-                    <div><i class="btn-lg fa fa-plus"></i></div>
+                    <div>
+                        <a href="javascript:adicionarTelefone();">
+                            <i class="btn-lg fa fa-plus"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="table-responsive">
@@ -159,12 +206,7 @@
                             <th scope="col">Número</th>
                         </tr>
                     </thead>
-                    <tbody id="tabelaTelefone">
-                        <tr>
-                            <th scope="row">Residencial</th>
-                            <td>11</td>
-                            <td>965036088</td>
-                        </tr>
+                    <tbody id="tabelaTelefone">                        
                     </tbody>
                 </table>
             </div>

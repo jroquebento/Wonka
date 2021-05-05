@@ -69,13 +69,21 @@ function validarDocumento() {
     return true;
 }
 
+function validarPessoa() {
+    if ($('#txtNome').val().length == 0 || $('#txtSobrenome').val().length == 0) {
+        alert('Favor cadastrar nome!')
+        return false;
+    }
+    createJSON();
+}
+
 //Criando json
 function createJSON() {
     jsonObjeto = [];
 
     jsonObjeto.Pessoa = {
-        "Nome": $("#txtSobrenome").val(),
-        "Sobrenome": $("#txtNome").val()
+        "Nome": $("#txtNome").val(),
+        "Sobrenome": $("#txtSobrenome").val()
     };
 
     jsonObjeto.Endereco = {
@@ -113,7 +121,7 @@ function montaJson(tr) {
                 }
                 jsonObjeto.Documento.push(itemDocumento);
             }
-            else {
+            if(tr == "Telefone") {
                 var ddd = $(this).find("td:nth-child(2)").text();
                 var numero = $(this).find("td:nth-child(3)").text();
                 var itemTelefone = {

@@ -14,7 +14,12 @@ namespace Wonka.Controllers
         public ViewResult Index()
         {
             return View();
-        }        
+        }
+
+        public ViewResult Adicionar()
+        {
+            return View();
+        }
 
         [HttpPost]
         public JsonResult Inserir(AdicionarPessoaViewModel jsonPessoa)

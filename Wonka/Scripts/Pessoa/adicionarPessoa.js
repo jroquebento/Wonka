@@ -106,10 +106,10 @@ function createJSON() {
         },
         Endereco: {
             "Tipo": $("#txtTipoEndereco").val(),
+            "CEP": $("#txtCEP").val(),
             "Logradouro": $("#txtLogradouro").val(),
             "Numero": $("#txtNumeroEndereco").val(),
             "Bairro": $("#txtBairro").val(),
-            "CEP": $("#txtCEP").val(),
             "Cidade": $("#txtCidade").val(),
             "UF": $("#txtUF").val()
         },
@@ -158,7 +158,7 @@ function postJson(objeto, metodo) {
         data: JSON.stringify({ jsonPessoa: objeto }),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
-        success: function (msg) { },
+        success: function (msg) {},
         error: function (msg) { }
     });
 }

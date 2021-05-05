@@ -8,7 +8,7 @@
 
 <title>@ViewBag.Title</title>
 
-<h1>Adicionar PessoaS</h1>
+<h1>Adicionar Pessoas</h1>
 
 <div id="adicionarPessoa">
     <ul class="nav nav-tabs nav-pills bg-light  mt-4 mb-3">
@@ -44,9 +44,15 @@
 
         <div class="tab-pane container fade" id="tabTelefone">
             <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-2">
                     <label for="txtTipoTelefone">Tipo</label>
-                    <input type="text" id="txtTipoTelefone" class="form-control">
+                    <select id="txtTipoTelefone" class="form-control">
+                        <option></option>
+                        <option value="residencial">Residencial</option>
+                        <option value="celular">Celular</option>
+                        <option value="comercial">Comercial</option>
+
+                    </select>                   
                 </div>
                 <div class="form-group col-md-1">
                     <label for="txtDDD">DDD</label>
@@ -84,11 +90,16 @@
             <div class="form-row">
                 <div class="form-group col-md-3">
                     <label for="txtTipoDocumento">Tipo</label>
-                    <input type="text" id="txtTipoDocumento" class="form-control">
+                    <select id="txtTipoDocumento" class="form-control">                        <option></option>
+                        <option value="CPF">CPF</option>
+                        <option value="RG">RG</option>
+                        <option value="CNPJ">CNPJ</option>
+                    </select>
+                
                 </div>
                 <div class="form-group col-md-4">
                     <label for="txtNumeroDocumento">Número</label>
-                    <input type="text" id="txtNumeroDocumento" class="form-control">
+                    <input type="text" id="txtNumeroDocumento"  class="form-control">
                 </div>
                 <div class="col-md-4 ml">
                     <label for="#">&nbsp;</label>
@@ -133,7 +144,7 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-1">
+                <div class="form-group col-md-2">
                     <label for="txtCEP">CEP</label>
                     <input type="text" id="txtCEP" class="form-control">
                 </div>
@@ -141,9 +152,38 @@
                     <label for="txtCidade">Cidade</label>
                     <input type="text" id="txtCidade" class="form-control">
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="txtUF">UF</label>
-                    <input type="text" id="txtUF" class="form-control">
+                <div class="form-group col-md-1">
+                    <label for="txtUF">UF</label>               
+                    <select id="txtUF" class="form-control">
+                        <option></option>
+                        <option value="AC">AC</option>
+                        <option value="AL">AL</option>
+                        <option value="AP">AP</option>
+                        <option value="AM">AM</option>
+                        <option value="BA">BA</option>
+                        <option value="CE">CE</option>
+                        <option value="DF">DF</option>
+                        <option value="ES">ES</option>
+                        <option value="GO">GO</option>
+                        <option value="MA">MA</option>
+                        <option value="MT">MT</option>
+                        <option value="MS">MS</option>
+                        <option value="MG">MG</option>
+                        <option value="PA">PA</option>
+                        <option value="PB">PB</option>
+                        <option value="PR">PR</option>
+                        <option value="PE">PE</option>
+                        <option value="PI">PI</option>
+                        <option value="RJ">RJ</option>
+                        <option value="RN">RN</option>
+                        <option value="RS">RS</option>
+                        <option value="RO">RO</option>
+                        <option value="RR">RR</option>
+                        <option value="SC">SC</option>
+                        <option value="SP">SP</option>
+                        <option value="SE">SE</option>
+                        <option value="TO">TO</option>
+                    </select>
                 </div>
             </div>
         </div>

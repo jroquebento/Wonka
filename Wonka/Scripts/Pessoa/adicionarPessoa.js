@@ -98,35 +98,32 @@ function validarPessoa() {
 
 //Criando json
 function createJSON() {
-    jsonObjeto = [];
 
-    jsonObjeto.Pessoa = {
-        "Nome": $("#txtNome").val(),
-        "Sobrenome": $("#txtSobrenome").val()
+    var jsonObjeto = {
+        Pessoa: {
+            "Nome": $("#txtNome").val(),
+            "Sobrenome": $("#txtSobrenome").val()
+        },
+        Endereco: {
+            "Tipo": $("#txtTipoEndereco").val(),
+            "Logradouro": $("#txtLogradouro").val(),
+            "Numero": $("#txtNumeroEndereco").val(),
+            "Bairro": $("#txtBairro").val(),
+            "CEP": $("#txtCEP").val(),
+            "Cidade": $("#txtCidade").val(),
+            "UF": $("#txtUF").val()
+        },
+        Documento: [],
+        Telefone: [],
     };
 
-    jsonObjeto.Endereco = {
-        "Tipo": $("#txtTipoEndereco").val(),
-        "Logradouro": $("#txtLogradouro").val(),
-        "Numero": $("#txtNumeroEndereco").val(),
-        "Bairro": $("#txtBairro").val(),
-        "CEP": $("#txtCEP").val(),
-        "Cidade": $("#txtCidade").val(),
-        "UF": $("#txtUF").val()
-    };
+    montaJson(jsonObjeto, "Documento");
+    montaJson(jsonObjeto, "Telefone");
 
-    //Montar JSON Documento
-    jsonObjeto.Documento = [];
-    montaJson("Documento");
-
-    // Montar JSON Telefone
-    jsonObjeto.Telefone = [];
-    montaJson("Telefone");
-
-    console.log(jsonObjeto);
+    postJson(jsonObjeto, "Inserir");
 }
 
-function montaJson(tr) {
+function montaJson(jsonObjeto, tr) {
     var linhas = $("#tabela" + tr + "> tr");
     if (linhas.length > 0) {
         linhas.each(function () {
@@ -152,4 +149,16 @@ function montaJson(tr) {
             }
         });
     }
+}
+
+function postJson(objeto, metodo) {
+    $.ajax({
+        type: 'POST',
+        url: metodo,
+        data: JSON.stringify({ jsonPessoa: objeto }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (msg) { },
+        error: function (msg) { }
+    });
 }

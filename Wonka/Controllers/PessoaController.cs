@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Services;
+using Wonka.Models;
 
 namespace Wonka.Controllers
 {
@@ -12,14 +14,12 @@ namespace Wonka.Controllers
         public ViewResult Index()
         {
             return View();
-        }
-        public ViewResult Adicionar()
+        }        
+
+        [HttpPost]
+        public JsonResult Inserir(AdicionarPessoaViewModel jsonPessoa)
         {
-            return View();
-        }
-        public JsonResult InserirJson(JsonResult json)
-        {
-            return Json( new JsonResult());
+            throw new NotImplementedException();
         }
     }
 }

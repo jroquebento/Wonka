@@ -253,6 +253,7 @@
     <Compile Include="Models\Documento.cs" />
     <Compile Include="Models\Endereco.cs" />
     <Compile Include="Models\Pessoa.cs" />
+    <Compile Include="Models\AdicionarPessoaViewModel.cs" />
     <Compile Include="Models\Telefone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

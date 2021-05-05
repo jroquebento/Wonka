@@ -14,13 +14,15 @@ function adicionarDocumento() {
 }
 
 function adicionarTelefone() {
-    var tipo = $('#txtTipoTelefone').val();
-    var ddd = $('#txtDDD').val();
-    var numero = $('#txtNumeroTelefone').val();
-    var linha = novaLinha("Telefone", tipo, ddd, numero);
-    $('#tabTelefone tbody').append(linha);
-    contadorTelefone++;
-    limparDadosTelefone();
+    if (validarTelefone()) {
+        var tipo = $('#txtTipoTelefone').val();
+        var ddd = $('#txtDDD').val();
+        var numero = $('#txtNumeroTelefone').val();
+        var linha = novaLinha("Telefone", tipo, ddd, numero);
+        $('#tabTelefone tbody').append(linha);
+        contadorTelefone++;
+        limparDadosTelefone();
+    }
 }
 
 function novaLinha(tr, tipo, ddd, numero) {
@@ -63,17 +65,34 @@ function limparDadosTelefone() {
 
 function validarDocumento() {
     if ($('#txtTipoDocumento').val().length == 0 || $('#txtNumeroDocumento').val().length == 0) {
-        alert('Favor cadastrar tipo e número!')
+        alert('Favor cadastrar tipo e número!');
+        return false;
+    }
+    return true;
+}
+
+function validarTelefone() {
+    if ($('#txtTipoTelefone').val().length == 0 || $('#txtDDD').val().length == 0 || $('#txtNumeroTelefone').val().length == 0) {
+        alert('Favor cadastrar tipo , ddd e número!');
         return false;
     }
     return true;
 }
 
 function validarPessoa() {
-    if ($('#txtNome').val().length == 0 || $('#txtSobrenome').val().length == 0) {
+    var nome = $('#txtNome').val();
+    var sobrenome = $('#txtSobrenome').val();
+    var trDocumento = $("#tabelaDocumento tr");
+
+    if (nome.length == 0 || sobrenome.length == 0) {
         alert('Favor cadastrar nome!')
         return false;
     }
+    if (trDocumento.length == 0) {
+        alert("Favor cadastrar pelo menos 1 documento!");
+        return false;
+    }
+
     createJSON();
 }
 
@@ -121,7 +140,7 @@ function montaJson(tr) {
                 }
                 jsonObjeto.Documento.push(itemDocumento);
             }
-            if(tr == "Telefone") {
+            if (tr == "Telefone") {
                 var ddd = $(this).find("td:nth-child(2)").text();
                 var numero = $(this).find("td:nth-child(3)").text();
                 var itemTelefone = {

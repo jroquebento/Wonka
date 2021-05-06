@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Services;
 using Wonka.Models;
+using Wonka.Repositorio;
 
 namespace Wonka.Controllers
 {
     public class PessoaController : Controller
     {
+        private RepositorioPessoa pessoaRepositorio = new RepositorioPessoa();
+
         public ViewResult Index()
         {
             return View();
@@ -24,6 +27,9 @@ namespace Wonka.Controllers
         [HttpPost]
         public JsonResult Inserir(AdicionarPessoaViewModel jsonPessoa)
         {
+           
+            pessoaRepositorio.Insert(jsonPessoa);
+            
             throw new NotImplementedException();
         }
     }

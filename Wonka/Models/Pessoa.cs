@@ -1,4 +1,6 @@
-﻿namespace Wonka.Models
+﻿using System.Collections.Generic;
+
+namespace Wonka.Models
 {
     public class Pessoa
     {

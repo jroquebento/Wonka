@@ -42,26 +42,19 @@ CREATE TABLE Endereco(
 );
 
 
+TRUNCATE TABLE Pessoa;
+
+SELECT * FROM Endereco;
+SELECT * FROM Documento;
+SELECT * FROM Pessoa;
+select * from Telefone;
+
+select * from Pessoa left join Endereco oN  Pessoa.Id = Endereco.IdPessoa; 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-SELECT * FROM pessoa;
 INSERT INTO Pessoa VALUES
-('Maria','de Souza'),
-('Pedro','Dias'),
-('Roger','Gomes')
-
+('Maria','de Souza')
+SELECT SCOPE_IDENTITY()
 
 
 

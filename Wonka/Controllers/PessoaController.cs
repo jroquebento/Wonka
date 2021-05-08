@@ -12,7 +12,10 @@ namespace Wonka.Controllers
 {
     public class PessoaController : Controller
     {
-        private RepositorioPessoa pessoaRepositorio = new RepositorioPessoa();
+        private RepositorioPessoa repositorioPessoa = new RepositorioPessoa();
+        private RepositorioDocumento repositorioDocumento = new RepositorioDocumento();
+        private RepositorioEndereco repositorioEndereco = new RepositorioEndereco();
+        private RepositorioTelefone repositorioTelefone = new RepositorioTelefone();
 
         public ViewResult Index()
         {
@@ -27,10 +30,8 @@ namespace Wonka.Controllers
         [HttpPost]
         public JsonResult Inserir(AdicionarPessoaViewModel jsonPessoa)
         {
-           
-            pessoaRepositorio.Insert(jsonPessoa);
-            
-            throw new NotImplementedException();
+            repositorioPessoa.Insert(jsonPessoa);
+            return Json(new { sucesso = true });
         }
     }
 }

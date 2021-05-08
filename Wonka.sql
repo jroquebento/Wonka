@@ -49,7 +49,7 @@ SELECT * FROM Documento;
 SELECT * FROM Pessoa;
 select * from Telefone;
 
-select * from Pessoa left join Endereco oN  Pessoa.Id = Endereco.IdPessoa; 
+select * from Pessoa inner join Endereco oN  Pessoa.Id = Endereco.IdPessoa; 
 
 
 INSERT INTO Pessoa VALUES

@@ -19,8 +19,10 @@ namespace Wonka.Repositorio
             conexaoDB = new RepositorioConexaoDB().GetConnection();
         }
 
-        public void Insert(AdicionarPessoaViewModel viewModel)
+        public void Insert(AdicionarPessoaViewModel pessoa)
         {
+            int idPessoa = 0;
+
             using (conexaoDB)
             {
                 SqlCommand cmd = conexaoDB.CreateCommand();
@@ -28,56 +30,30 @@ namespace Wonka.Repositorio
                 cmd.Transaction = transaction;
                 try
                 {
-                    string queryString = "INSERT INTO PESSOA VALUES(@nome,@sobrenome) SELECT SCOPE_IDENTITY()";                    
+                    string queryString = "INSERT INTO PESSOA VALUES(@nome,@sobrenome) SELECT SCOPE_IDENTITY()";
                     cmd.CommandText = queryString;
-                    cmd.Parameters.AddWithValue("@nome", viewModel.Pessoa.Nome);
-                    cmd.Parameters.AddWithValue("@sobrenome", viewModel.Pessoa.Sobrenome);
-                    int idPessoa = Convert.ToInt32(cmd.ExecuteScalar());
-
-                    queryString = "INSERT INTO ENDERECO VALUES(@idPessoa,@tipoEndereco,@cep,@logradouro," +
-                        "@numeroEndereco,@bairro,@cidade,@uf)";
-                    cmd.CommandText = queryString;                    
-                    cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
-                    cmd.Parameters.AddWithValue("@tipoEndereco", viewModel.Endereco.Tipo);
-                    cmd.Parameters.AddWithValue("@cep", viewModel.Endereco.CEP);
-                    cmd.Parameters.AddWithValue("@logradouro", viewModel.Endereco.Logradouro);
-                    cmd.Parameters.AddWithValue("@numeroEndereco", viewModel.Endereco.Numero);
-                    cmd.Parameters.AddWithValue("@bairro", viewModel.Endereco.Bairro);
-                    cmd.Parameters.AddWithValue("@cidade", viewModel.Endereco.Cidade);
-                    cmd.Parameters.AddWithValue("@uf", viewModel.Endereco.UF);
-                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@nome", pessoa.Pessoa.Nome);
+                    cmd.Parameters.AddWithValue("@sobrenome", pessoa.Pessoa.Sobrenome);
+                    idPessoa = Convert.ToInt32(cmd.ExecuteScalar());
                     cmd.Parameters.Clear();
 
-                    queryString = "INSERT INTO DOCUMENTO VALUES(@idPessoa,@tipoDocumento,@numeroDocumento)";
-                    
-                    foreach (var item in viewModel.Documento)
-                    {                        
-                        cmd.CommandText = queryString;
-                        cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
-                        cmd.Parameters.AddWithValue("@tipoDocumento", item.Tipo);
-                        cmd.Parameters.AddWithValue("@numeroDocumento", item.Numero);
-                        cmd.ExecuteNonQuery();
-                        cmd.Parameters.Clear();
-                    }
+                    if (idPessoa > 0)
+                    {                     
+                        RepositorioDocumento repositorioDocumento = new RepositorioDocumento();
+                        repositorioDocumento.Insert(pessoa.Documento, idPessoa, cmd);
 
-                    queryString = "INSERT INTO TELEFONE VALUES(@idPessoa,@tipoTelefone,@ddd,@numeroTelefone)";
-                    
-                    foreach (var item in viewModel.Telefone)
-                    {
-                        cmd.CommandText = queryString;
-                        cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
-                        cmd.Parameters.AddWithValue("@tipoTelefone", item.Tipo);
-                        cmd.Parameters.AddWithValue("@ddd", item.DDD);
-                        cmd.Parameters.AddWithValue("@numeroTelefone", item.Numero);
-                        cmd.ExecuteNonQuery();
-                        cmd.Parameters.Clear();
-                    }
+                        RepositorioEndereco repositorioEndereco = new RepositorioEndereco();
+                        repositorioEndereco.Insert(pessoa.Endereco, idPessoa, cmd);
 
-                    transaction.Commit();
+                        RepositorioTelefone repositorioTelefone = new RepositorioTelefone();
+                        repositorioTelefone.Insert(pessoa.Telefone, idPessoa, cmd);
+                                                       
+                        transaction.Commit();
+                    }
                 }
                 catch (Exception ex)
                 {
-                    cmd.Transaction.Rollback();
+                    transaction.Rollback();                    
                 }
             }
         }

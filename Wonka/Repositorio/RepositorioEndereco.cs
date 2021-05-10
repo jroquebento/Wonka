@@ -31,5 +31,39 @@ namespace Wonka.Repositorio
             cmd.ExecuteNonQuery();
             cmd.Parameters.Clear();
         }
+
+        public Endereco FindById(int? idPessoa)
+        {
+            string queryString = "SELECT * FROM ENDERECO WHERE IDPESSOA = " + idPessoa;
+            
+            Endereco endereco = new Endereco();
+
+            using (conexaoDB)
+            {
+                SqlCommand command = new SqlCommand(queryString, conexaoDB);
+                try
+                {
+                    SqlDataReader resultado = command.ExecuteReader();
+                    while (resultado.Read())
+                    {                        
+                        endereco.Id = resultado.GetInt32(0);
+                        endereco.IdPessoa = resultado.GetInt32(1);
+                        endereco.Tipo = resultado.GetString(2);
+                        endereco.CEP = resultado.GetString(3);
+                        endereco.Logradouro = resultado.GetString(4);
+                        endereco.Numero = resultado.GetString(5);
+                        endereco.Bairro = resultado.GetString(6);
+                        endereco.Cidade = resultado.GetString(7);
+                        endereco.UF = resultado.GetString(8);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return endereco;
+        }
+
     }
 }

@@ -17,8 +17,11 @@ namespace Wonka.Controllers
         private RepositorioEndereco repositorioEndereco = new RepositorioEndereco();
         private RepositorioTelefone repositorioTelefone = new RepositorioTelefone();
 
+        [HttpGet]
         public ViewResult Index()
         {
+            var teste = repositorioPessoa.FindAll();
+
             return View();
         }
 
@@ -28,7 +31,7 @@ namespace Wonka.Controllers
         }
 
         [HttpPost]
-        public JsonResult Inserir(AdicionarPessoaViewModel jsonPessoa)
+        public JsonResult Inserir(PessoaViewModel jsonPessoa)
         {
             repositorioPessoa.Insert(jsonPessoa);
             return Json(new { sucesso = true });

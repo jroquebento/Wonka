@@ -19,7 +19,7 @@ namespace Wonka.Repositorio
             conexaoDB = new RepositorioConexaoDB().GetConnection();
         }
 
-        public void Insert(AdicionarPessoaViewModel pessoa)
+        public void Insert(PessoaViewModel pessoa)
         {
             int idPessoa = 0;
 
@@ -38,7 +38,7 @@ namespace Wonka.Repositorio
                     cmd.Parameters.Clear();
 
                     if (idPessoa > 0)
-                    {                     
+                    {
                         RepositorioDocumento repositorioDocumento = new RepositorioDocumento();
                         repositorioDocumento.Insert(pessoa.Documento, idPessoa, cmd);
 
@@ -47,15 +47,90 @@ namespace Wonka.Repositorio
 
                         RepositorioTelefone repositorioTelefone = new RepositorioTelefone();
                         repositorioTelefone.Insert(pessoa.Telefone, idPessoa, cmd);
-                                                       
+
                         transaction.Commit();
                     }
                 }
                 catch (Exception ex)
                 {
-                    transaction.Rollback();                    
+                    transaction.Rollback();
                 }
             }
         }
+
+        public List<Pessoa> FindAll()
+        {            
+            List<Pessoa> listaPessoa = new List<Pessoa>();
+
+            using (conexaoDB)
+            {
+                string queryString = "SELECT ID,NOME,SOBRENOME FROM PESSOA";
+                SqlCommand cmd = new SqlCommand(queryString, conexaoDB);
+                try
+                {
+                    SqlDataReader resultado = cmd.ExecuteReader();
+                    RepositorioEndereco repositorioEndereco = new RepositorioEndereco();
+
+                    if (resultado.HasRows)
+                    {
+                        while (resultado.Read())
+                        {
+                            var pessoa = new Pessoa
+                            {
+                                Id = resultado.GetInt32(0),
+                                Nome = resultado.GetString(1),
+                                Sobrenome = resultado.GetString(2)
+                            };
+                            listaPessoa.Add(pessoa);                           
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+            return listaPessoa;
+        }
+
+        public List<PessoaViewModel> FindAllTables()
+        {
+            List<PessoaViewModel> listaPessoa = new List<PessoaViewModel>();
+
+            using (conexaoDB)
+            {
+                string queryString = "SELECT ID,NOME,SOBRENOME FROM PESSOA";
+                SqlCommand cmd = new SqlCommand(queryString, conexaoDB);
+                try
+                {
+                    SqlDataReader resultado = cmd.ExecuteReader();
+                    RepositorioEndereco repositorioEndereco = new RepositorioEndereco();
+
+                    if (resultado.HasRows)
+                    {
+                        while (resultado.Read())
+                        {
+                            PessoaViewModel pessoaViewModel = new PessoaViewModel
+                            {
+                                Pessoa = {
+                                Id = resultado.GetInt32(0),
+                                Nome = resultado.GetString(1),
+                                Sobrenome = resultado.GetString(2)
+                            },
+                                Endereco = repositorioEndereco.FindById(resultado.GetInt32(0)),
+                                Documento = new List<Documento>(),
+                                Telefone = new List<Telefone>()
+                            };
+                            listaPessoa.Add(pessoaViewModel);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+            return listaPessoa;
+        }
+
+
     }
 }

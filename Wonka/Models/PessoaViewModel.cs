@@ -2,7 +2,7 @@
 
 namespace Wonka.Models
 {
-    public class AdicionarPessoaViewModel
+    public class PessoaViewModel
     {
         public Pessoa Pessoa { get; set; }
         public Endereco Endereco { get; set; }

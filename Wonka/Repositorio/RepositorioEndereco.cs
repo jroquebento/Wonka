@@ -32,7 +32,7 @@ namespace Wonka.Repositorio
             cmd.Parameters.Clear();
         }
 
-        public Endereco FindById(int? idPessoa)
+        public Endereco FindById(int idPessoa)
         {
             string queryString = "SELECT * FROM ENDERECO WHERE IDPESSOA = " + idPessoa;
             

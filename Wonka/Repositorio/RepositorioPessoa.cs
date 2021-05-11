@@ -59,7 +59,7 @@ namespace Wonka.Repositorio
         }
 
         public List<Pessoa> FindAll()
-        {            
+        {
             List<Pessoa> listaPessoa = new List<Pessoa>();
 
             using (conexaoDB)
@@ -81,7 +81,7 @@ namespace Wonka.Repositorio
                                 Nome = resultado.GetString(1),
                                 Sobrenome = resultado.GetString(2)
                             };
-                            listaPessoa.Add(pessoa);                           
+                            listaPessoa.Add(pessoa);
                         }
                     }
                 }
@@ -92,16 +92,35 @@ namespace Wonka.Repositorio
             return listaPessoa;
         }
 
-        public List<PessoaViewModel> FindAllTables()
+        public List<PessoaViewModel> FindById(int idPessoa)
         {
             List<PessoaViewModel> listaPessoa = new List<PessoaViewModel>();
 
             using (conexaoDB)
             {
-                string queryString = "SELECT ID,NOME,SOBRENOME FROM PESSOA";
+                string queryString = "SELECT ID,NOME,SOBRENOME FROM PESSOA WHERE ID=" + idPessoa;
                 SqlCommand cmd = new SqlCommand(queryString, conexaoDB);
                 try
                 {
+                    List<Documento> listaDoc = new List<Documento>();
+                    listaDoc.Add(new Documento
+                    {
+                        Id = 0,
+                        IdPessoa = 1,
+                        Numero = "0000",
+                        Tipo = "TIPO"
+                    });
+
+                    List<Telefone> listaTel = new List<Telefone>();
+                    listaTel.Add(new Telefone
+                    {
+                        Id = 0,
+                        IdPessoa = 1,
+                        Numero = "0000",
+                        Tipo = "TIPO",
+                        DDD = "21"
+                    });
+
                     SqlDataReader resultado = cmd.ExecuteReader();
                     RepositorioEndereco repositorioEndereco = new RepositorioEndereco();
 
@@ -111,15 +130,15 @@ namespace Wonka.Repositorio
                         {
                             PessoaViewModel pessoaViewModel = new PessoaViewModel
                             {
-                                Pessoa = {
+                                Pessoa = new Pessoa{
                                 Id = resultado.GetInt32(0),
                                 Nome = resultado.GetString(1),
                                 Sobrenome = resultado.GetString(2)
                             },
-                                Endereco = repositorioEndereco.FindById(resultado.GetInt32(0)),
-                                Documento = new List<Documento>(),
-                                Telefone = new List<Telefone>()
-                            };
+                                Endereco = repositorioEndereco.FindById(idPessoa),                                
+                                Documento = listaDoc,
+                                Telefone = listaTel
+                            };                            
                             listaPessoa.Add(pessoaViewModel);
                         }
                     }

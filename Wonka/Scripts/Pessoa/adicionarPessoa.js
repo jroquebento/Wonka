@@ -158,8 +158,7 @@ function postJson(objeto, metodo) {
         data: JSON.stringify({ jsonPessoa: objeto }),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
-        success: function (msg) {
-            //console.log(msg);
+        success: function (msg) {           
             if (msg.sucesso) {
                 window.location.href = "Index";
             }

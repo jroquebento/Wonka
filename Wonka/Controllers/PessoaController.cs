@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using System.Web.Services;
 using Wonka.Models;
 using Wonka.Repositorio;
@@ -13,16 +14,22 @@ namespace Wonka.Controllers
     public class PessoaController : Controller
     {
         private RepositorioPessoa repositorioPessoa = new RepositorioPessoa();
-        private RepositorioDocumento repositorioDocumento = new RepositorioDocumento();
-        private RepositorioEndereco repositorioEndereco = new RepositorioEndereco();
-        private RepositorioTelefone repositorioTelefone = new RepositorioTelefone();
-
-        [HttpGet]
+        
         public ViewResult Index()
         {
-            var teste = repositorioPessoa.FindAll();
-
+            var repositorio = repositorioPessoa.FindById(1);
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult FindAll()
+        {            
+            var listaPessoas = new
+            {              
+                ListaPessoas = repositorioPessoa.FindAll()
+            };
+
+            return Json(listaPessoas, JsonRequestBehavior.AllowGet);
         }
 
         public ViewResult Adicionar()

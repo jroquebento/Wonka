@@ -102,27 +102,29 @@ namespace Wonka.Repositorio
                 SqlCommand cmd = new SqlCommand(queryString, conexaoDB);
                 try
                 {
-                    List<Documento> listaDoc = new List<Documento>();
+                    /*List<Documento> listaDoc = new List<Documento>();
                     listaDoc.Add(new Documento
                     {
                         Id = 0,
                         IdPessoa = 1,
                         Numero = "0000",
                         Tipo = "TIPO"
-                    });
+                    });*/
 
-                    List<Telefone> listaTel = new List<Telefone>();
-                    listaTel.Add(new Telefone
-                    {
-                        Id = 0,
-                        IdPessoa = 1,
-                        Numero = "0000",
-                        Tipo = "TIPO",
-                        DDD = "21"
-                    });
+                    //List<Telefone> listaTel = new List<Telefone>();
+                    //listaTel.Add(new Telefone
+                    //{
+                    //    Id = 0,
+                    //    IdPessoa = 1,
+                    //    Numero = "0000",
+                    //    Tipo = "TIPO",
+                    //    DDD = "21"
+                    //});
 
                     SqlDataReader resultado = cmd.ExecuteReader();
                     RepositorioEndereco repositorioEndereco = new RepositorioEndereco();
+                    RepositorioDocumento repositorioDocumento = new RepositorioDocumento();
+                    RepositorioTelefone repositorioTelefone = new RepositorioTelefone();
 
                     if (resultado.HasRows)
                     {
@@ -136,8 +138,8 @@ namespace Wonka.Repositorio
                                 Sobrenome = resultado.GetString(2)
                             },
                                 Endereco = repositorioEndereco.FindById(idPessoa),                                
-                                Documento = listaDoc,
-                                Telefone = listaTel
+                                Documento = repositorioDocumento.FindById(idPessoa),
+                                Telefone = repositorioTelefone.FindById(idPessoa)
                             };                            
                             listaPessoa.Add(pessoaViewModel);
                         }
@@ -149,7 +151,6 @@ namespace Wonka.Repositorio
             }
             return listaPessoa;
         }
-
 
     }
 }

@@ -112,6 +112,7 @@
     <Content Include="Content\v4-shims.css" />
     <Content Include="Content\v4-shims.min.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\Pessoa\alterarPessoa.js" />
     <Content Include="Scripts\Pessoa\index.js" />
     <Content Include="Scripts\Pessoa\adicionarPessoa.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -285,6 +286,7 @@
     <Content Include="Views\Shared\_menu.cshtml" />
     <Content Include="Views\Pessoa\Index.cshtml" />
     <Content Include="Views\Pessoa\Adicionar.cshtml" />
+    <Content Include="Views\Pessoa\Alterar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

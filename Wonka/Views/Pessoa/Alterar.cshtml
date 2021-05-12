@@ -1,0 +1,205 @@
+﻿@{
+    ViewBag.Title = "Alterar";
+}
+
+<head>
+    <script src="~/Scripts/Pessoa/alterarPessoa.js"></script>
+</head>
+
+<title>@ViewBag.Title</title>
+
+<h1>Alterar Pessoa</h1>
+
+<form>
+    <input type="hidden" id="idPessoa" value="@ViewBag.Id"> 
+</form>
+<div id="alterarPessoa">
+    <ul class="nav nav-tabs nav-pills bg-light  mt-4 mb-3">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#tabPessoa">Pessoa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tabDocumento">Documento</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tabEndereco">Endereço</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tabTelefone">Telefone</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane container active" id="tabPessoa">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="txtNome">Nome</label>
+                    <input type="text" id="txtNome" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="txtSobrenome">Sobrenome</label>
+                    <input type="text" id="txtSobrenome" class="form-control">
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="tab-pane container fade" id="tabTelefone">
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label for="txtTipoTelefone">Tipo</label>
+                    <select id="txtTipoTelefone" class="form-control">
+                        <option></option>
+                        <option value="residencial">Residencial</option>
+                        <option value="celular">Celular</option>
+                        <option value="comercial">Comercial</option>
+
+                    </select>                   
+                </div>
+                <div class="form-group col-md-1">
+                    <label for="txtDDD">DDD</label>
+                    <input type="text" id="txtDDD" class="form-control">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="txtNumeroTelefone">Número</label>
+                    <input type="text" id="txtNumeroTelefone" class="form-control">
+                </div>
+                <div class="col-md-5 ml">
+                    <label for="#">&nbsp;</label>
+                    <div>
+                        <a href="javascript:adicionarTelefone();">
+                            <i class="btn-lg fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">DDD</th>
+                            <th scope="col">Número</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaTelefone">                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-pane container fade" id="tabDocumento">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="txtTipoDocumento">Tipo</label>
+                    <select id="txtTipoDocumento" class="form-control">                        <option></option>
+                        <option value="CPF">CPF</option>
+                        <option value="RG">RG</option>
+                        <option value="CNPJ">CNPJ</option>
+                    </select>
+                
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="txtNumeroDocumento">Número</label>
+                    <input type="text" id="txtNumeroDocumento"  class="form-control">
+                </div>
+                <div class="col-md-4 ml">
+                    <label for="#">&nbsp;</label>
+                    <div><a href="javascript:adicionarDocumento();"><i class="btn-lg fa fa-plus"></i></a></div>
+                </div>
+
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Número</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaDocumento">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-pane container fade" id="tabEndereco">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="txtTipoEndereco">Tipo</label>
+                    <input type="text" id="txtTipoEndereco" class="form-control">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="txtLogradouro">Logradouro</label>
+                    <input type="text" id="txtLogradouro" class="form-control">
+                </div>
+                <div class="form-group col-md-1">
+                    <label for="txtNumeroEndereco">Número</label>
+                    <input type="text" id="txtNumeroEndereco" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="txtBairro">Bairro</label>
+                    <input type="text" id="txtBairro" class="form-control">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label for="txtCEP">CEP</label>
+                    <input type="text" id="txtCEP" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="txtCidade">Cidade</label>
+                    <input type="text" id="txtCidade" class="form-control">
+                </div>
+                <div class="form-group col-md-1">
+                    <label for="txtUF">UF</label>               
+                    <select id="txtUF" class="form-control">
+                        <option></option>
+                        <option value="AC">AC</option>
+                        <option value="AL">AL</option>
+                        <option value="AP">AP</option>
+                        <option value="AM">AM</option>
+                        <option value="BA">BA</option>
+                        <option value="CE">CE</option>
+                        <option value="DF">DF</option>
+                        <option value="ES">ES</option>
+                        <option value="GO">GO</option>
+                        <option value="MA">MA</option>
+                        <option value="MT">MT</option>
+                        <option value="MS">MS</option>
+                        <option value="MG">MG</option>
+                        <option value="PA">PA</option>
+                        <option value="PB">PB</option>
+                        <option value="PR">PR</option>
+                        <option value="PE">PE</option>
+                        <option value="PI">PI</option>
+                        <option value="RJ">RJ</option>
+                        <option value="RN">RN</option>
+                        <option value="RS">RS</option>
+                        <option value="RO">RO</option>
+                        <option value="RR">RR</option>
+                        <option value="SC">SC</option>
+                        <option value="SP">SP</option>
+                        <option value="SE">SE</option>
+                        <option value="TO">TO</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="btn-group mt-2">
+            <div>
+                <button class="btn btn-success mr-3 " onclick="validarPessoa();">Salvar</button>
+            </div>
+
+            <div>
+                <a href="@Url.Action("Index","Pessoa")" class="btn btn-danger">Voltar</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+

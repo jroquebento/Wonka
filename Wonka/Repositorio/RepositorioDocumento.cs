@@ -19,9 +19,9 @@ namespace Wonka.Repositorio
         public void Insert(List<Documento> documento, int idPessoa, SqlCommand cmd)
         {
             var queryString = "INSERT INTO DOCUMENTO VALUES(@idPessoa,@tipoDocumento,@numeroDocumento)";
-            
+
             foreach (var item in documento)
-            {                
+            {
                 cmd.CommandText = queryString;
                 cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
                 cmd.Parameters.AddWithValue("@tipoDocumento", item.Tipo);
@@ -29,6 +29,39 @@ namespace Wonka.Repositorio
                 cmd.ExecuteNonQuery();
                 cmd.Parameters.Clear();
             }
+        }
+
+        public List<Documento> FindById(int idPessoa)
+        {
+            string queryString = "SELECT * FROM DOCUMENTO WHERE IDPESSOA = " + idPessoa;
+
+            List<Documento> listaDocumento = new List<Documento>();
+
+            using (conexaoDB)
+            {
+                SqlCommand command = new SqlCommand(queryString, conexaoDB);
+                try
+                {
+                    SqlDataReader resultado = command.ExecuteReader();
+                    while (resultado.Read())
+                    {
+                        var documento = new Documento
+                        {
+                            Id = resultado.GetInt32(0),
+                            IdPessoa = resultado.GetInt32(1),
+                            Numero = resultado.GetString(2),
+                            Tipo = resultado.GetString(3)
+                        };
+                        listaDocumento.Add(documento);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return listaDocumento;
         }
     }
 }

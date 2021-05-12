@@ -159,10 +159,42 @@ function postJson(objeto, metodo) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (msg) {           
-            if (msg.sucesso) {                
+            if (msg.sucesso) {
                 window.location.href = "Index";
             }
         },
         error: function (msg) { }
     });
 }
+
+function getJson() {
+    var id = $('#idPessoa').val();
+    var actionUrl = '/Pessoa/Editar/' + id;
+
+    $.getJSON(actionUrl, function (response) { 
+        
+        if (response != null) {
+            //console.log(response.pessoa[0].Pessoa.Id);
+            for (var i = 0; i < response.Pessoa.length; i++) {
+                $("#txtNome").val(response.Pessoa[i].Pessoa.Nome);
+                $("#txtSobrenome").val(response.Pessoa[i].Pessoa.Sobrenome);
+            }
+
+            for (var i = 0; i < response.Pessoa.length; i++) {
+                $("#txtTipoEndereco").val(response.Pessoa[i].Endereco.Tipo);
+                $("#txtLogradouro").val(response.Pessoa[i].Endereco.Logradouro);
+                $("#txtNumeroEndereco").val(response.Pessoa[i].Endereco.Numero);
+                $("#txtBairro").val(response.Pessoa[i].Endereco.Bairro);
+                $("#txtBairro").val(response.Pessoa[i].Endereco.Bairro);
+                $("#txtCEP").val(response.Pessoa[i].Endereco.CEP);
+                $("#txtCidade").val(response.Pessoa[i].Endereco.Cidade);
+                $("#txtUF").val(response.Pessoa[i].Endereco.UF);
+            }
+
+        }
+    });
+}
+
+$(document).ready(function () {
+    getJson();
+});

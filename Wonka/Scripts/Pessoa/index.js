@@ -7,7 +7,7 @@ function novaLinha(idPessoa, nome, sobrenome) {
     var colunaSobrenome = $('<td id=sobrenome>').text(sobrenome);
     var colunaRemover = $("<td>");
 
-    var linkEditar = $("<a>").attr("href", "/Edit/" + idPessoa).attr("class", "btn btn-sm btn-outline-success mr-2").text('Editar ');
+    var linkEditar = $("<a>").attr("href", "/Pessoa/Alterar/" + idPessoa).attr("class", "btn btn-sm btn-outline-success mr-2").text('Editar ');
     var iconeEditar = $("<i>").addClass("fas fa-user-edit");   
 
     linkEditar.append(iconeEditar);    
@@ -29,8 +29,11 @@ function novaLinha(idPessoa, nome, sobrenome) {
 
 function getJson() {
     var actionUrl = '/Pessoa/FindAll';
+
     $.getJSON(actionUrl, function (response) {
-        if (response != null) {            
+
+        if (response != null) { 
+            
             for (var i = 0; i < response.ListaPessoas.length; i++) {
                 
                 var linha = novaLinha(response.ListaPessoas[i].Id, response.ListaPessoas[i].Nome, response.ListaPessoas[i].Sobrenome);                

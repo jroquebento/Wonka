@@ -16,8 +16,7 @@ namespace Wonka.Controllers
         private RepositorioPessoa repositorioPessoa = new RepositorioPessoa();
         
         public ViewResult Index()
-        {
-            var repositorio = repositorioPessoa.FindById(1);
+        {            
             return View();
         }
 
@@ -30,6 +29,24 @@ namespace Wonka.Controllers
             };
 
             return Json(listaPessoas, JsonRequestBehavior.AllowGet);
+        }
+
+        public ViewResult Alterar(int id)
+        {
+            ViewBag.Id = id;
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Editar(int id)
+        {
+            var pessoa = new
+            {
+                Pessoa = repositorioPessoa.FindById(id)
+            };                        
+
+            return Json(pessoa, JsonRequestBehavior.AllowGet);
         }
 
         public ViewResult Adicionar()

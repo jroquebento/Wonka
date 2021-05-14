@@ -101,26 +101,7 @@ namespace Wonka.Repositorio
                 string queryString = "SELECT ID,NOME,SOBRENOME FROM PESSOA WHERE ID=" + idPessoa;
                 SqlCommand cmd = new SqlCommand(queryString, conexaoDB);
                 try
-                {
-                    /*List<Documento> listaDoc = new List<Documento>();
-                    listaDoc.Add(new Documento
-                    {
-                        Id = 0,
-                        IdPessoa = 1,
-                        Numero = "0000",
-                        Tipo = "TIPO"
-                    });*/
-
-                    //List<Telefone> listaTel = new List<Telefone>();
-                    //listaTel.Add(new Telefone
-                    //{
-                    //    Id = 0,
-                    //    IdPessoa = 1,
-                    //    Numero = "0000",
-                    //    Tipo = "TIPO",
-                    //    DDD = "21"
-                    //});
-
+                {                  
                     SqlDataReader resultado = cmd.ExecuteReader();
                     RepositorioEndereco repositorioEndereco = new RepositorioEndereco();
                     RepositorioDocumento repositorioDocumento = new RepositorioDocumento();

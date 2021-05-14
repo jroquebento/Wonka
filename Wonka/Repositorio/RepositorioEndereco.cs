@@ -16,7 +16,7 @@ namespace Wonka.Repositorio
             conexaoDB = new RepositorioConexaoDB().GetConnection();
         }
         public void Insert(Endereco endereco, int idPessoa, SqlCommand cmd)
-        {         
+        {
             var queryString = "INSERT INTO ENDERECO VALUES(@idPessoa,@tipo,@cep,@logradouro," +
              "@numero,@bairro,@cidade,@uf)";
             cmd.CommandText = queryString;
@@ -35,35 +35,56 @@ namespace Wonka.Repositorio
         public Endereco FindById(int idPessoa)
         {
             string queryString = "SELECT * FROM ENDERECO WHERE IDPESSOA = " + idPessoa;
-            
+
             Endereco endereco = new Endereco();
 
-            using (conexaoDB)
+            SqlCommand command = new SqlCommand(queryString, conexaoDB);
+
+            SqlDataReader resultado = command.ExecuteReader();
+            while (resultado.Read())
             {
-                SqlCommand command = new SqlCommand(queryString, conexaoDB);
-                try
-                {
-                    SqlDataReader resultado = command.ExecuteReader();
-                    while (resultado.Read())
-                    {                        
-                        endereco.Id = resultado.GetInt32(0);
-                        endereco.IdPessoa = resultado.GetInt32(1);
-                        endereco.Tipo = resultado.GetString(2);
-                        endereco.CEP = resultado.GetString(3);
-                        endereco.Logradouro = resultado.GetString(4);
-                        endereco.Numero = resultado.GetString(5);
-                        endereco.Bairro = resultado.GetString(6);
-                        endereco.Cidade = resultado.GetString(7);
-                        endereco.UF = resultado.GetString(8);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                endereco.Id = resultado.GetInt32(0);
+                endereco.IdPessoa = resultado.GetInt32(1);
+                endereco.Tipo = resultado.GetString(2);
+                endereco.CEP = resultado.GetString(3);
+                endereco.Logradouro = resultado.GetString(4);
+                endereco.Numero = resultado.GetString(5);
+                endereco.Bairro = resultado.GetString(6);
+                endereco.Cidade = resultado.GetString(7);
+                endereco.UF = resultado.GetString(8);
             }
             return endereco;
         }
 
+        public void Update(int? idEndereco, Endereco endereco) 
+        {
+            var queryString = "UPDATE ENDERECO SET" +
+                "TIPO = (@tipo)," +  "CEP = (@cep)," +
+                "LOGRADOURO = (@logradouro)," +
+                "NUMERO = (@numero)," +
+                "BAIRRO = (@bairro)," + 
+                "CIDADE = (@cidade)," +
+                "UF = (@uf) WHERE ID = " + idEndereco;
+
+            using (conexaoDB) 
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conexaoDB);             
+                try
+                {
+                    cmd.Parameters.AddWithValue("@tipo", endereco.Tipo);
+                    cmd.Parameters.AddWithValue("@cep", endereco.CEP);
+                    cmd.Parameters.AddWithValue("@logradouro", endereco.Logradouro);
+                    cmd.Parameters.AddWithValue("@numero", endereco.Numero);
+                    cmd.Parameters.AddWithValue("@bairro", endereco.Bairro);
+                    cmd.Parameters.AddWithValue("@cidade", endereco.Cidade);
+                    cmd.Parameters.AddWithValue("@uf", endereco.UF);
+                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.Clear();
+                }
+                catch (Exception ex)
+                {         
+                }
+            }
+        }
     }
 }

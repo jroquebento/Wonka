@@ -1,6 +1,12 @@
 ﻿contadorDocumento = 1;
 contadorTelefone = 1;
 
+function carregarDocumento(tr, tipo, numero) {
+    var linha = novaLinha(tr, tipo, null, numero);
+    $('#tabDocumento tbody').append(linha);
+    contadorDocumento++;
+}
+
 //Criar função de adicionar documento
 function adicionarDocumento() {
     if (validarDocumento()) {
@@ -11,6 +17,12 @@ function adicionarDocumento() {
         contadorDocumento++;
         limparDadosDocumento();
     }
+}
+
+function carregarTelefone(tr, tipo, ddd, numero) {
+    var linha = novaLinha(tr, tipo, ddd, numero);
+    $('#tabTelefone tbody').append(linha);
+    contadorTelefone++;
 }
 
 function adicionarTelefone() {
@@ -34,7 +46,7 @@ function novaLinha(tr, tipo, ddd, numero) {
     var colunaDDD = $('<td id=DDD' + tr + '>').text(ddd);
     var colunaRemover = $("<td>");
 
-    var link = $("<a>").attr("href", "javascript:deletarLinha(" + id + ")");
+    var link = $("<a>").attr("onclick", "deletarLinha(" + id + ")");
     var icone = $("<i>").addClass("fas fa-trash-alt");
 
     link.append(icone);
@@ -49,7 +61,7 @@ function novaLinha(tr, tipo, ddd, numero) {
 }
 
 function deletarLinha(elemento) {
-    $(elemento).remove();
+    $(elemento).remove();   
 }
 
 function limparDadosDocumento() {
@@ -63,7 +75,7 @@ function limparDadosTelefone() {
     $('#txtNumeroTelefone').val('');
 }
 
-function validarDocumento() {
+function validarDocumento() { 
     if ($('#txtTipoDocumento').val().length == 0 || $('#txtNumeroDocumento').val().length == 0) {
         alert('Favor cadastrar tipo e número!');
         return false;
@@ -158,7 +170,7 @@ function postJson(objeto, metodo) {
         data: JSON.stringify({ jsonPessoa: objeto }),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
-        success: function (msg) {           
+        success: function (msg) {
             if (msg.sucesso) {
                 window.location.href = "Index";
             }
@@ -171,10 +183,11 @@ function getJson() {
     var id = $('#idPessoa').val();
     var actionUrl = '/Pessoa/Editar/' + id;
 
-    $.getJSON(actionUrl, function (response) { 
-        
+    $.getJSON(actionUrl, function (response) {
+
         if (response != null) {
-            //console.log(response.pessoa[0].Pessoa.Id);
+            console.log(response);
+
             for (var i = 0; i < response.Pessoa.length; i++) {
                 $("#txtNome").val(response.Pessoa[i].Pessoa.Nome);
                 $("#txtSobrenome").val(response.Pessoa[i].Pessoa.Sobrenome);
@@ -191,6 +204,22 @@ function getJson() {
                 $("#txtUF").val(response.Pessoa[i].Endereco.UF);
             }
 
+            for (var i = 0; i < response.Pessoa.length; i++) {
+                for (var j = 0; j < response.Pessoa[i].Telefone.length; j++) {
+                    carregarTelefone("Telefone",
+                        response.Pessoa[i].Telefone[j].Tipo,
+                        response.Pessoa[i].Telefone[j].DDD,
+                        response.Pessoa[i].Telefone[j].Numero);
+                }
+            }
+
+            for (var i = 0; i < response.Pessoa.length; i++) {
+                for (var j = 0; j < response.Pessoa[i].Documento.length; j++) {
+                    carregarDocumento("Documento",
+                        response.Pessoa[i].Documento[j].Tipo,
+                        response.Pessoa[i].Documento[j].Numero);
+                }
+            }
         }
     });
 }

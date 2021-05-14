@@ -20,7 +20,7 @@ namespace Wonka.Repositorio
         public void Insert(List<Telefone> telefone, int idPessoa, SqlCommand cmd)
         {
             var queryString = "INSERT INTO TELEFONE VALUES(@idPessoa,@tipoTelefone,@ddd,@numeroTelefone)";
-            
+
             foreach (var item in telefone)
             {
                 cmd.CommandText = queryString;
@@ -39,32 +39,45 @@ namespace Wonka.Repositorio
 
             List<Telefone> listaTelefone = new List<Telefone>();
 
-            using (conexaoDB)
-            {
-                SqlCommand command = new SqlCommand(queryString, conexaoDB);
-                try
-                {
-                    SqlDataReader resultado = command.ExecuteReader();
-                    while (resultado.Read())
-                    {
-                        var telefone = new Telefone
-                        {
-                            Id = resultado.GetInt32(0),
-                            IdPessoa = resultado.GetInt32(1),
-                            DDD = resultado.GetString(2),
-                            Numero = resultado.GetString(3),
-                            Tipo = resultado.GetString(4)
-                        };
-                        listaTelefone.Add(telefone);
-                    }
+            SqlCommand command = new SqlCommand(queryString, conexaoDB);
 
-                }
-                catch (Exception ex)
+            SqlDataReader resultado = command.ExecuteReader();
+            while (resultado.Read())
+            {
+                var telefone = new Telefone
                 {
-                    Console.WriteLine(ex.Message);
-                }
+                    Id = resultado.GetInt32(0),
+                    IdPessoa = resultado.GetInt32(1),
+                    Tipo = resultado.GetString(2),
+                    DDD = resultado.GetString(3),
+                    Numero = resultado.GetString(4)
+                };
+                listaTelefone.Add(telefone);
             }
             return listaTelefone;
         }
+
+        public void Update(int? id, Telefone telefone)
+        {
+            var queryString = "UPDATE TELEFONE SET" +
+                              "TIPO = (@tipo), DDD = (@ddd),NUMERO = (@numero) WHERE ID = " + id;
+
+            using (conexaoDB)
+            {
+                SqlCommand cmd = new SqlCommand(queryString, conexaoDB);
+                try
+                {
+                    cmd.Parameters.AddWithValue("@tipo", telefone.Tipo);
+                    cmd.Parameters.AddWithValue("@ddd", telefone.DDD);
+                    cmd.Parameters.AddWithValue("@numero", telefone.Numero);
+                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.Clear();
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+        }
+
     }
 }

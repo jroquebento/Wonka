@@ -11,7 +11,8 @@
 <h1>Alterar Pessoa</h1>
 
 <form>
-    <input type="hidden" id="idPessoa" value="@ViewBag.Id"> 
+    <input type="hidden" id="txtIdPessoa" value="@ViewBag.Id">
+    <input type="hidden" id="txtIdEndereco" value="@ViewBag.IdEndereco">
 </form>
 <div id="alterarPessoa">
     <ul class="nav nav-tabs nav-pills bg-light  mt-4 mb-3">
@@ -81,6 +82,8 @@
                             <th scope="col">Tipo</th>
                             <th scope="col">DDD</th>
                             <th scope="col">Número</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody id="tabelaTelefone">                        
@@ -117,6 +120,7 @@
                         <tr>
                             <th scope="col">Tipo</th>
                             <th scope="col">Número</th>
+                            <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>
                     </thead>

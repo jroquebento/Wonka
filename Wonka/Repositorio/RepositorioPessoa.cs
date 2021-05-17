@@ -101,7 +101,7 @@ namespace Wonka.Repositorio
                 string queryString = "SELECT ID,NOME,SOBRENOME FROM PESSOA WHERE ID=" + idPessoa;
                 SqlCommand cmd = new SqlCommand(queryString, conexaoDB);
                 try
-                {                  
+                {
                     SqlDataReader resultado = cmd.ExecuteReader();
                     RepositorioEndereco repositorioEndereco = new RepositorioEndereco();
                     RepositorioDocumento repositorioDocumento = new RepositorioDocumento();
@@ -113,15 +113,16 @@ namespace Wonka.Repositorio
                         {
                             PessoaViewModel pessoaViewModel = new PessoaViewModel
                             {
-                                Pessoa = new Pessoa{
-                                Id = resultado.GetInt32(0),
-                                Nome = resultado.GetString(1),
-                                Sobrenome = resultado.GetString(2)
-                            },
-                                Endereco = repositorioEndereco.FindById(idPessoa),                                
+                                Pessoa = new Pessoa
+                                {
+                                    Id = resultado.GetInt32(0),
+                                    Nome = resultado.GetString(1),
+                                    Sobrenome = resultado.GetString(2)
+                                },
+                                Endereco = repositorioEndereco.FindById(idPessoa),
                                 Documento = repositorioDocumento.FindById(idPessoa),
                                 Telefone = repositorioTelefone.FindById(idPessoa)
-                            };                            
+                            };
                             listaPessoa.Add(pessoaViewModel);
                         }
                     }
@@ -131,6 +132,60 @@ namespace Wonka.Repositorio
                 }
             }
             return listaPessoa;
+        }
+
+        public void Update(PessoaViewModel pessoa)
+        {
+            using (conexaoDB)
+            {
+                SqlCommand cmd = conexaoDB.CreateCommand();
+                try
+                {
+                    string queryString = "UPDATE PESSOA SET NOME=(@nome),SOBRENOME=(@sobrenome)" +
+                        " WHERE ID = " + pessoa.Pessoa.Id;
+                    cmd.CommandText = queryString;
+                    cmd.Parameters.AddWithValue("@nome", pessoa.Pessoa.Nome);
+                    cmd.Parameters.AddWithValue("@sobrenome", pessoa.Pessoa.Sobrenome);
+                    cmd.ExecuteNonQuery();
+
+                    RepositorioEndereco repositorioEndereco = new RepositorioEndereco();
+                    repositorioEndereco.Update(pessoa.Endereco, pessoa.Endereco.Id);
+
+                    #region comentado
+                    //foreach (var documento in pessoa.Documento)
+                    //{
+                    //    RepositorioDocumento repositorioDocumento = new RepositorioDocumento();
+
+                    //    if (documento.Id > 0)
+                    //    {
+                    //        repositorioDocumento.Update(documento.Id, documento);
+                    //    }
+                    //    else
+                    //    {
+                    //        repositorioDocumento.Insert(documento, pessoa.Pessoa.Id);
+                    //    }
+                    //}
+
+                    //foreach (var telefone in pessoa.Telefone)
+                    //{
+                    //    RepositorioTelefone repositorioTelefone = new RepositorioTelefone();
+
+                    //    if (telefone.Id > 0)
+                    //    {
+                    //        repositorioTelefone.Update(telefone.Id, telefone);
+                    //    }
+                    //    else
+                    //    {
+                    //        repositorioTelefone.Insert(telefone, pessoa.Pessoa.Id);
+                    //    }
+                    //}
+                    #endregion
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
         }
 
     }

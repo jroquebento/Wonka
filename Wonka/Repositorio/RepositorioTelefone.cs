@@ -33,6 +33,22 @@ namespace Wonka.Repositorio
             }
         }
 
+        public void Insert(Telefone telefone, int idPessoa)
+        {
+            using (conexaoDB) 
+            {
+                var queryString = "INSERT INTO TELEFONE VALUES(@idPessoa,@tipoTelefone,@ddd,@numeroTelefone)";
+                SqlCommand cmd = new SqlCommand(queryString, conexaoDB);
+                cmd.CommandText = queryString;
+                cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
+                cmd.Parameters.AddWithValue("@tipoTelefone", telefone.Tipo);
+                cmd.Parameters.AddWithValue("@ddd", telefone.DDD);
+                cmd.Parameters.AddWithValue("@numeroTelefone", telefone.Numero);
+                cmd.ExecuteNonQuery();
+                cmd.Parameters.Clear();
+            }
+        }
+
         public List<Telefone> FindById(int idPessoa)
         {
             string queryString = "SELECT * FROM TELEFONE WHERE IDPESSOA = " + idPessoa;
@@ -57,27 +73,30 @@ namespace Wonka.Repositorio
             return listaTelefone;
         }
 
-        public void Update(int? id, Telefone telefone)
+        public void Update(int id, Telefone telefone)
         {
-            var queryString = "UPDATE TELEFONE SET" +
+            var queryString = "UPDATE TELEFONE SET " +
                               "TIPO = (@tipo), DDD = (@ddd),NUMERO = (@numero) WHERE ID = " + id;
 
             using (conexaoDB)
             {
                 SqlCommand cmd = new SqlCommand(queryString, conexaoDB);
-                try
-                {
-                    cmd.Parameters.AddWithValue("@tipo", telefone.Tipo);
-                    cmd.Parameters.AddWithValue("@ddd", telefone.DDD);
-                    cmd.Parameters.AddWithValue("@numero", telefone.Numero);
-                    cmd.ExecuteNonQuery();
-                    cmd.Parameters.Clear();
-                }
-                catch (Exception ex)
-                {
-                }
+
+                cmd.Parameters.AddWithValue("@tipo", telefone.Tipo);
+                cmd.Parameters.AddWithValue("@ddd", telefone.DDD);
+                cmd.Parameters.AddWithValue("@numero", telefone.Numero);
+                cmd.ExecuteNonQuery();
             }
         }
 
+        public void Delete(int id)
+        {
+            using (conexaoDB)
+            {
+                var queryString = "DELETE FROM TELEFONE WHERE ID = " + id;
+                SqlCommand cmd = new SqlCommand(queryString, conexaoDB);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

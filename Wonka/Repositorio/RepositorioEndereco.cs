@@ -56,35 +56,28 @@ namespace Wonka.Repositorio
             return endereco;
         }
 
-        public void Update(int? idEndereco, Endereco endereco) 
+        public void Update(Endereco endereco, int id)
         {
-            var queryString = "UPDATE ENDERECO SET" +
-                "TIPO = (@tipo)," +  "CEP = (@cep)," +
+            using (conexaoDB)
+            {
+                var queryString = "UPDATE ENDERECO SET " +
+                "TIPO = (@tipo)," + "CEP = (@cep)," +
                 "LOGRADOURO = (@logradouro)," +
                 "NUMERO = (@numero)," +
-                "BAIRRO = (@bairro)," + 
+                "BAIRRO = (@bairro)," +
                 "CIDADE = (@cidade)," +
-                "UF = (@uf) WHERE ID = " + idEndereco;
-
-            using (conexaoDB) 
-            {
-                SqlCommand cmd = new SqlCommand(queryString, conexaoDB);             
-                try
-                {
-                    cmd.Parameters.AddWithValue("@tipo", endereco.Tipo);
-                    cmd.Parameters.AddWithValue("@cep", endereco.CEP);
-                    cmd.Parameters.AddWithValue("@logradouro", endereco.Logradouro);
-                    cmd.Parameters.AddWithValue("@numero", endereco.Numero);
-                    cmd.Parameters.AddWithValue("@bairro", endereco.Bairro);
-                    cmd.Parameters.AddWithValue("@cidade", endereco.Cidade);
-                    cmd.Parameters.AddWithValue("@uf", endereco.UF);
-                    cmd.ExecuteNonQuery();
-                    cmd.Parameters.Clear();
-                }
-                catch (Exception ex)
-                {         
-                }
+                "UF = (@uf) WHERE ID = " + id;
+                SqlCommand cmd = new SqlCommand(queryString, conexaoDB);
+                cmd.Parameters.AddWithValue("@tipo", endereco.Tipo);
+                cmd.Parameters.AddWithValue("@cep", endereco.CEP);
+                cmd.Parameters.AddWithValue("@logradouro", endereco.Logradouro);
+                cmd.Parameters.AddWithValue("@numero", endereco.Numero);
+                cmd.Parameters.AddWithValue("@bairro", endereco.Bairro);
+                cmd.Parameters.AddWithValue("@cidade", endereco.Cidade);
+                cmd.Parameters.AddWithValue("@uf", endereco.UF);
+                cmd.ExecuteNonQuery();                         
             }
+
         }
     }
 }

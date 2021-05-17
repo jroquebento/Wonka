@@ -31,6 +31,23 @@ namespace Wonka.Repositorio
             }
         }
 
+        public int Insert(Documento documento, int idPessoa)
+        {
+            using (conexaoDB)
+            {
+                var queryString = "INSERT INTO DOCUMENTO VALUES(@idPessoa,@tipoDocumento,@numeroDocumento)";
+                SqlCommand cmd = new SqlCommand(queryString, conexaoDB);
+
+                cmd.CommandText = queryString;
+                cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
+                cmd.Parameters.AddWithValue("@tipoDocumento", documento.Tipo);
+                cmd.Parameters.AddWithValue("@numeroDocumento", documento.Numero);               
+                int id = Convert.ToInt32(cmd.ExecuteScalar());
+                return id;
+            }
+        }
+
+
         public List<Documento> FindById(int idPessoa)
         {
             string queryString = "SELECT * FROM DOCUMENTO WHERE IDPESSOA = " + idPessoa;
@@ -54,24 +71,27 @@ namespace Wonka.Repositorio
             }
             return listaDocumento;
         }
-        public void Update(int? id, Documento documento)
+        public void Update(int id, Documento documento)
         {
-            var queryString = "UPDATE DOCUMENTO SET" +
-                              "TIPO = (@tipo), NUMERO = (@numero) WHERE ID = " + id;
-
             using (conexaoDB)
             {
+                var queryString = "UPDATE DOCUMENTO SET " +
+                       "TIPO = (@tipo), NUMERO = (@numero) WHERE ID = " + id;
+
                 SqlCommand cmd = new SqlCommand(queryString, conexaoDB);
-                try
-                {
-                    cmd.Parameters.AddWithValue("@tipo", documento.Tipo);                
-                    cmd.Parameters.AddWithValue("@numero", documento.Numero);                   
-                    cmd.ExecuteNonQuery();
-                    cmd.Parameters.Clear();
-                }
-                catch (Exception ex)
-                {
-                }
+                cmd.Parameters.AddWithValue("@tipo", documento.Tipo);
+                cmd.Parameters.AddWithValue("@numero", documento.Numero);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (conexaoDB)
+            {
+                var queryString = "DELETE FROM DOCUMENTO WHERE ID = " + id;
+                SqlCommand cmd = new SqlCommand(queryString, conexaoDB);              
+                cmd.ExecuteNonQuery();
             }
         }
     }

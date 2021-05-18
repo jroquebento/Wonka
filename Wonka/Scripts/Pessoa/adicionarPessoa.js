@@ -28,11 +28,11 @@ function adicionarTelefone() {
 function novaLinha(tr, tipo, ddd, numero) {
     var contador = (tr == "Documento" ? contadorDocumento : contadorTelefone);
     var id = tr + contador;
-    var linha = $('<tr id=' + id + '>');
-    var colunaTipo = $('<td id=tipo' + tr + '>').text(tipo);
-    var colunaNumero = $('<td id=numero' + tr + '>').text(numero);
+    var linha = $("<tr class='d-flex' id=" + id + ">");
+    var colunaTipo = $('<td class=col-2 id=tipo' + tr + '>').text(tipo);
+    var colunaNumero = $('<td class=col-3 id=numero' + tr + '>').text(numero);
     var colunaDDD = $('<td id=DDD' + tr + '>').text(ddd);
-    var colunaRemover = $("<td>");
+    var colunaRemover = $("<td class=col-1>");
 
     var link = $("<a>").attr("href", "javascript:deletarLinha(" + id + ")");
     var icone = $("<i>").addClass("fas fa-trash-alt");

@@ -31,8 +31,8 @@ function novaLinha(tr, tipo, ddd, numero) {
     var linha = $("<tr class='d-flex' id=" + id + ">");
     var colunaTipo = $('<td class=col-2 id=tipo' + tr + '>').text(tipo);
     var colunaNumero = $('<td class=col-3 id=numero' + tr + '>').text(numero);
-    var colunaDDD = $('<td id=DDD' + tr + '>').text(ddd);
-    var colunaRemover = $("<td class=col-1>");
+    var colunaDDD = $('<td class=col-2 id=DDD' + tr + '>').text(ddd);
+    var colunaRemover = $('<td class=col-1>');
 
     var link = $("<a>").attr("href", "javascript:deletarLinha(" + id + ")");
     var icone = $("<i>").addClass("fas fa-trash-alt");
@@ -84,16 +84,16 @@ function validarPessoa() {
     var sobrenome = $('#txtSobrenome').val();
     var trDocumento = $("#tabelaDocumento tr");
 
-    if (nome.length == 0 || sobrenome.length == 0) {
+    if (nome.length == 0 || sobrenome.length == 0) {        
         alert('Favor cadastrar nome!')
         return false;
     }
     if (trDocumento.length == 0) {
-        alert("Favor cadastrar pelo menos 1 documento!");
+        alert("Favor cadastrar pelo menos 1 documento!");        
         return false;
     }
-
-    createJSON();
+    
+    //createJSON();
 }
 
 //Criando json

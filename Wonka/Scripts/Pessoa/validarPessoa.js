@@ -1,5 +1,4 @@
 ﻿$(function () {
-
     $("#validarFormulario").validate({
         rules: {
             nome: {
@@ -37,8 +36,7 @@
             sobrenome: "O campo sobrenome é obrigatório",
         },
         errorElement: "em",
-        errorPlacement: function (error, element) {
-            //Adicionar a mensagem
+        errorPlacement: function (error, element) {            
             error.addClass("invalid-feedback");
 
             if (element.prop("type") === "checkbox") {
@@ -53,16 +51,5 @@
         unhighlight: function (element) {
             $(element).addClass("is-valid").removeClass("is-invalid");
         }
-
-    });
-
-    $('.teste').popover().click(function () {
-        if ($('#txtTipoDocumento').val().length == 0 || $('#txtNumeroDocumento').val().length == 0) {
-            setTimeout(function () {
-                $('.teste').popover('hide');
-            }, 2000);
-        }
-    });
-
-    
+    });    
 });

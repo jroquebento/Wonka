@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,22 @@ namespace Wonka.Controllers
 {
     public class PessoaController : Controller
     {
+        public enum TipoPessoa
+        {
+            [Description("Cliente")]
+            Cliente = 1,
+            [Description("Fornecedor")]
+            Fornecedor = 2
+        }
+
+        public enum TipoDocumento
+        {
+            [Description("Cpf")]
+            Cpf = 1,
+            [Description("CNPJ")]
+            Cnpj = 2
+        }
+
         private RepositorioPessoa repositorioPessoa = new RepositorioPessoa();
         private RepositorioEndereco repositorioEndereco = new RepositorioEndereco();
         private RepositorioDocumento repositorioDocumento = new RepositorioDocumento();

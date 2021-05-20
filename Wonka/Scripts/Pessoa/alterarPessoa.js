@@ -178,8 +178,8 @@ function createJSON() {
         Telefone: [],
     };
 
-    montaJson(jsonObjeto, "Documento");
-    montaJson(jsonObjeto, "Telefone");
+    //montaJson(jsonObjeto, "Documento");
+    //montaJson(jsonObjeto, "Telefone");
 
     postJson(jsonObjeto);
 }

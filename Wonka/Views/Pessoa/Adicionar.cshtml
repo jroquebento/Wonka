@@ -1,8 +1,8 @@
 ﻿@{
     ViewBag.Title = "Adicionar";
 }
-
 <head>
+    <script src="~/Scripts/Pessoa/validarPessoa.js"></script>
     <script src="~/Scripts/Pessoa/adicionarPessoa.js"></script>
     <script src="~/Scripts/messages_pt_BR.js"></script>
 </head>
@@ -10,7 +10,24 @@
 
 <div class="container col-md-10 mt-5" id="adicionarPessoa">
     <form method="POST" id="validarFormulario">
-        <div class="card mt-5">
+
+        <div class="card mt-1">
+            <h5 class="card-header">Tipo Pessoa</h5>
+            <div class="container mt-2" id="tabTipoPessoa">
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="txtTipo">Tipo:</label>
+                        <select id="txtTipoPessoa" name="txtTipoPessoa" class="form-control">
+                            <option></option>                            
+                            <option value="1">Cliente</option>
+                            <option value="2">Fornecedor</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-2">
             <h5 class="card-header">Dados Pessoais</h5>
             <div class="container mt-2" id="tabPessoa">
                 <div class="form-row">
@@ -97,8 +114,6 @@
             </div>
         </div>
 
-
-
         <div class="card mt-2">
             <h5 class="card-header">Documentos</h5>
             <div class="container mt-2" id="tabDocumento">
@@ -107,11 +122,9 @@
                         <label for="txtTipoDocumento">Tipo</label>
                         <select id="txtTipoDocumento" class="form-control">
                             <option></option>
-                            <option value="CPF">CPF</option>
-                            <option value="RG">RG</option>
+                            <option value="CPF">CPF</option>                            
                             <option value="CNPJ">CNPJ</option>
                         </select>
-
                     </div>
                     <div class="form-group col-md-3">
                         <label for="txtNumeroDocumento">Número</label>
@@ -121,8 +134,8 @@
                         <label for="#">&nbsp;</label>
                         <div>
                             <a href="javascript:adicionarDocumento();">
-                            <i class="btn-lg fa fa-plus"></i>
-                         </a>
+                                <i class="btn-lg fa fa-plus"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -191,25 +204,13 @@
                 </div>
             </div>
         </div>
-
         <div class=" mt-5 mb-5 text-center">
-
-            <button class="btn btn-success mr-3" onclick="validarPessoa();">Salvar</button>
-
-            <button class="teste"  type="submit" 
-                    data-container="body"
-                    data-toggle="popover" 
-                    data-placement="right"
-                    data-content="Teste.">Testar</button>
-
+            <button class="btn btn-success mr-3" id="btnSalvar" onclick="return validarPessoa();">Salvar</button>
             <a href="@Url.Action("Index","Pessoa")" class="btn btn-danger">Voltar</a>
         </div>
     </form>
 </div>
-
 @section scripts{
     <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/Pessoa/validarPessoa.js"></script>
-
 }
 

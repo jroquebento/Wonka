@@ -79,21 +79,20 @@ function validarTelefone() {
     return true;
 }
 
-function validarPessoa() {
-    var nome = $('#txtNome').val();
-    var sobrenome = $('#txtSobrenome').val();
+function validarPessoa() {    
     var trDocumento = $("#tabelaDocumento tr");
-
-    if (nome.length == 0 || sobrenome.length == 0) {        
-        alert('Favor cadastrar nome!')
-        return false;
-    }
+    
     if (trDocumento.length == 0) {
         alert("Favor cadastrar pelo menos 1 documento!");        
         return false;
     }
+
+    if (trDocumento.length == 0) {
+        alert("Favor cadastrar pelo menos 1 telefone!");
+        return false;
+    }
     
-    //createJSON();
+    createJSON();
 }
 
 //Criando json
@@ -166,3 +165,10 @@ function postJson(objeto, metodo) {
         error: function (msg) { }
     });
 }
+
+$(document).ready(function () {
+    $("#btnSalvar").click(function () {  
+        if ($("#validarFormulario").valid()) {
+        } 
+    });
+});
